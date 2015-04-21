@@ -12,12 +12,10 @@ def process(request):
     if request.method == "GET":
         
         lista_Urls = url_Acortar.objects.all()
-        urls+="<a>URLS GUARDADAS:</a>"
+        urls+="<a>URLS GUARDADAS:</a></br></br>"
         for url in lista_Urls:
-            urls += "<pre>" + str(url.id) +\
-                    " Url acortada de: " +url.Url + "<b/>"
-        urls += "<br/>"
-        form = "<form action='' method='POST'>Introduzca su Url: <input type=\
+            urls += "<pre>Url acortada de: " + url.Url + "  -->  " + str(url.id)
+        form = "</br></br></br><form action='' method='POST'>Introduzca su Url a acortar: <input type=\
                 'text' name='url'><input type='submit' value='Enviar'></form>"
         return HttpResponse(urls + form)
 
@@ -34,8 +32,8 @@ def process(request):
         except url_Acortar.DoesNotExist:
             newUrl = url_Acortar(Url=url)
             newUrl.save()
-        response = "<p>url acortada: <a href=" + str(newUrl.id) + ">" +\
-                    str(newUrl.id) + "</a></p>"
+        response = "<p>Url acortada: " + str(newUrl.id) + "</b></p>"
+        response += "<a href=" + str(newUrl.id) + ">Pulse aqui para ir a la url</a></br></br>"
         response += "<a href=''>Pulse aqui para volver al acortador</a>"
 
         return HttpResponse(response)
